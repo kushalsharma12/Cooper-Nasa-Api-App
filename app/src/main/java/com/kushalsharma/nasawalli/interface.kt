@@ -14,7 +14,7 @@ interface NasaInterface {
     @GET("planetary/apod?api_key=$API_KEY")
     fun getNasainfo(): Call<Nasa>
 
-    @GET("techtransfer/patent/?astronomy&api_key=$API_KEY")
+    @GET("techtransfer/patent/?telescope&api_key=$API_KEY")
     fun getNasaPatents(): Call<Patent>
 
 }

@@ -25,7 +25,6 @@ import coil.Coil
 import coil.ImageLoader
 import coil.request.ImageRequest
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.android.synthetic.main.fragment_clicked_patent.view.*
@@ -58,7 +57,7 @@ class ClickedPatentFragment() : Fragment() {
             root.tv_pctitle.text = args.letstryIOTD.title
             root.tv_pcDescription.text = args.letstryIOTD.explanation
             Glide.with(this).load(args.letstryIOTD.url)
-                .transform(FitCenter(),RoundedCorners(30))
+                .transform(FitCenter(), RoundedCorners(30))
                 .into(root.iv_pc)
             imgUrl = args.letstryIOTD.url
 

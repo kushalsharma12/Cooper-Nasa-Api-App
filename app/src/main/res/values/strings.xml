@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Cooper</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="permission_title">Permission Required</string>
     <string name="write_permission_request">Please allow access to store images in your phone.</string>
