@@ -22,7 +22,13 @@
         </activity>
         <meta-data
             android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+            android:resource="@array/preloaded_fonts"
+            />
+
+        <meta-data
+            android:name="nasa_api_key"
+            android:value="${NASA_API_KEY}"
+            />
     </application>
 
 </manifest>

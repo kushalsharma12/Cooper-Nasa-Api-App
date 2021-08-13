@@ -18,6 +18,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders = [ NASA_API_KEY:getApiKey()]
     }
 
     buildTypes {
@@ -33,6 +35,16 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+applicationVariants.all { variant ->
+    variant.buildConfigField "String", "NASA_API_KEY" , "\""+getApiKey()+"\""
+  }
+}
+
+def getApiKey(){
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['NASA_API_KEY']
 }
 
 dependencies {
