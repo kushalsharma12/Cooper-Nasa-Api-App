@@ -1,6 +1,7 @@
-package com.kushalsharma.nasawalli
+package com.kushalsharma.nasawalli.Ui.ClickedPatentFragment
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -19,6 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton
 import coil.Coil
@@ -27,6 +29,9 @@ import coil.request.ImageRequest
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.kushalsharma.nasawalli.MainActivity
+import com.kushalsharma.nasawalli.R
+import com.kushalsharma.nasawalli.showPermissionRequestDialog
 import kotlinx.android.synthetic.main.fragment_clicked_patent.view.*
 import kotlinx.coroutines.launch
 import java.io.File
@@ -40,7 +45,6 @@ class ClickedPatentFragment() : Fragment() {
     private var imgUrl: String? = null
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var imageLoader: ImageLoader
-    private lateinit var main: MainActivity
     private var btnDownload: CircularProgressButton? = null
 
     override fun onCreateView(
@@ -50,33 +54,41 @@ class ClickedPatentFragment() : Fragment() {
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_clicked_patent, container, false)
 
-        main = MainActivity()
         btnDownload = root.findViewById(R.id.btn_download) as CircularProgressButton
+        setPermissionCallback()
 
         if (args.patentInfo == "null" && args.patentDecpInfo == "null" && args.patentImgUrlInfo == "null") {
+            root.clickedFrag_Title.text = "Astronomy Picture of the Day"
             root.tv_pctitle.text = args.letstryIOTD.title
             root.tv_pcDescription.text = args.letstryIOTD.explanation
             Glide.with(this).load(args.letstryIOTD.url)
                 .transform(FitCenter(), RoundedCorners(30))
+                .placeholder(R.drawable.ic_placeholder)
                 .into(root.iv_pc)
             imgUrl = args.letstryIOTD.url
 
         } else {
+            root.clickedFrag_Title.text = "Techs & Patents"
             root.tv_pctitle.text = args.patentInfo
             root.tv_pcDescription.text = args.patentDecpInfo
-            Glide.with(this).load(args.patentImgUrlInfo).into(root.iv_pc)
+            Glide.with(this)
+                .load(args.patentImgUrlInfo)
+                .placeholder(R.drawable.ic_placeholder)
+                .into(root.iv_pc)
             imgUrl = args.patentImgUrlInfo
 
         }
 
-//        root.img_progressBar.visible(false)
-        setPermissionCallback()
         imageLoader = Coil.imageLoader(this.requireContext())
 
         btnDownload!!.setOnClickListener {
 
             checkPermissionAndDownloadBitmap(imgUrl.toString())
 
+        }
+        root.cardview_backBtn.setOnClickListener {
+            Navigation.findNavController(it)
+                .navigate(R.id.action_clickedPatentFragment_to_mainFragment)
         }
 
         return root
@@ -103,7 +115,7 @@ class ClickedPatentFragment() : Fragment() {
                 getBitmapFromUrl(bitmapURL)
             }
             shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) -> {
-                main.showPermissionRequestDialog(
+                (activity as MainActivity?)!!.showPermissionRequestDialog(
                     getString(R.string.permission_title),
                     getString(R.string.write_permission_request)
                 ) {
@@ -118,15 +130,12 @@ class ClickedPatentFragment() : Fragment() {
 
     //this function will fetch the Bitmap from the given URL
     private fun getBitmapFromUrl(bitmapURL: String) = lifecycleScope.launch {
-//        progressbar.visible(true)
         btnDownload!!.startAnimation()
-//        imgViewLoader.load(bitmapURL)
         val request = ImageRequest.Builder(requireContext())
             .data(bitmapURL)
             .build()
         try {
             val downloadedBitmap = (imageLoader.execute(request).drawable as BitmapDrawable).bitmap
-//            imgViewLoader.setImageBitmap(downloadedBitmap)
             saveMediaToStorage(downloadedBitmap)
         } catch (e: Exception) {
             Toast.makeText(context, "${e.message}", Toast.LENGTH_SHORT).show()
@@ -134,10 +143,9 @@ class ClickedPatentFragment() : Fragment() {
 
         btnDownload!!.revertAnimation()
 
-
-//        progressbar.visible(false)
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun saveMediaToStorage(bitmap: Bitmap) {
         val filename = "${System.currentTimeMillis()}.jpg"
         var fos: OutputStream? = null
@@ -162,6 +170,12 @@ class ClickedPatentFragment() : Fragment() {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
 
             Toast.makeText(context, "Saved to Photos", Toast.LENGTH_SHORT).show()
+            (activity as MainActivity?)!!.showBanner(
+                R.color.green,
+                "Image saved to your Photos", 2000,
+                R.drawable.ic_baseline_download_done_24
+            )
+
 
         }
     }

@@ -1,11 +1,12 @@
-package com.kushalsharma.nasawalli
+package com.kushalsharma.nasawalli.Models
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-data class Nasa(
+ data class Nasa(
     val date: String,
     val explanation: String,
     val hdurl: String,

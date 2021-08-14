@@ -7,16 +7,18 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.kushalsharma.nasawalli.MainFragment"
+        android:name="com.kushalsharma.nasawalli.Ui.MainFragment.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_clickedPatentFragment2"
-            app:destination="@id/clickedPatentFragment" />
+            app:destination="@id/clickedPatentFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/clickedPatentFragment"
-        android:name="com.kushalsharma.nasawalli.ClickedPatentFragment"
+        android:name="com.kushalsharma.nasawalli.Ui.ClickedPatentFragment.ClickedPatentFragment"
         android:label="fragment_clicked_patent"
         tools:layout="@layout/fragment_clicked_patent" >
         <argument
@@ -30,6 +32,9 @@
             app:argType="string" />
         <argument
             android:name="letstryIOTD"
-            app:argType="com.kushalsharma.nasawalli.Nasa" />
+            app:argType="com.kushalsharma.nasawalli.Models.Nasa" />
+        <action
+            android:id="@+id/action_clickedPatentFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 </navigation>

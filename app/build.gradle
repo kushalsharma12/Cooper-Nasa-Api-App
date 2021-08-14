@@ -19,12 +19,15 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        manifestPlaceholders = [ NASA_API_KEY:getApiKey()]
+        //manifestPlaceholders — It helps to create a global variable that can
+        //  be used only in AndroidManifest.xml
+        manifestPlaceholders = [NASA_API_KEY: getApiKey()]
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -36,12 +39,12 @@ android {
         jvmTarget = '1.8'
     }
 
-applicationVariants.all { variant ->
-    variant.buildConfigField "String", "NASA_API_KEY" , "\""+getApiKey()+"\""
-  }
+    applicationVariants.all { variant ->
+        variant.buildConfigField "String", "NASA_API_KEY", "\"" + getApiKey() + "\""
+    }
 }
 
-def getApiKey(){
+def getApiKey() {
     def Properties props = new Properties()
     props.load(new FileInputStream(new File('secrets.properties')))
     return props['NASA_API_KEY']
@@ -97,6 +100,10 @@ dependencies {
 
     //lottie
     implementation "com.airbnb.android:lottie:3.4.0"
+
+    //banner
+    implementation 'com.github.tapadoo:alerter:7.2.4'
+
 
 
 }

@@ -1,5 +1,8 @@
-package com.kushalsharma.nasawalli
+package com.kushalsharma.nasawalli.Interface
 
+import com.kushalsharma.nasawalli.BuildConfig
+import com.kushalsharma.nasawalli.Models.Nasa
+import com.kushalsharma.nasawalli.Models.Patent
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -1,10 +1,11 @@
-package com.kushalsharma.nasawalli
+package com.kushalsharma.nasawalli.Models
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Patent(
+ data class Patent(
     val count: Int,
     val page: Int,
     val perpage: Int,

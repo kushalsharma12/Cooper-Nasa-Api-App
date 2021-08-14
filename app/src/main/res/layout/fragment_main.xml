@@ -1,29 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@drawable/background_pic"
     app:layoutDescription="@xml/fragment_main_scene"
-    tools:context=".MainFragment">
+    tools:context=".Ui.MainFragment.MainFragment">
+    
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/toolbar_mainFrag"
+        app:cardBackgroundColor="@android:color/transparent"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:id="@+id/tv_mainFragTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="24dp"
+                android:fontFamily="sans-serif"
+                android:textSize="20sp"
+                android:text="Copper"
+                android:textColor="@color/white"
+                android:layout_marginTop="14dp"
+            />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:rippleColor="@color/white"
+                android:foreground="@color/white"
+                app:cardCornerRadius="32dp"
+                android:layout_marginTop="12dp"
+                android:id="@+id/toolbar_cardView_loader"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginRight="32dp"
+                >
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="48dp"
+                    android:layout_height="28dp"
+                    android:id="@+id/toolbar_loader"
+                    app:lottie_loop="false"
+                    android:padding="4dp"
+                    app:lottie_autoPlay="false"
+                    android:layout_gravity="center"
+                    app:lottie_url="https://assets1.lottiefiles.com/packages/lf20_5tpjmqok.json"
+                    />
+
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+    
+
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/layout_picOfDay"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         android:clickable="true"
+        android:focusable="true"
+        app:rippleColor="@color/white"
         android:foreground="@color/white"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_mainFrag"
         app:strokeColor="@color/white"
         app:strokeWidth="2dp">
+
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -38,16 +110,30 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/avatars" />
+            <ProgressBar
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                app:layout_constraintLeft_toLeftOf="@id/iv_picofDay"
+                app:layout_constraintRight_toRightOf="@id/iv_picofDay"
+                app:layout_constraintTop_toTopOf="@id/iv_picofDay"
+                android:indeterminate="true"
+                android:indeterminateTintMode="src_atop"
+                android:indeterminateTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/iv_picofDay"
+                android:id="@+id/imgOfDayProgressBar"
+                />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/black"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:strokeColor="@color/white"
-                app:strokeWidth="2dp">
+                app:strokeColor="@color/black"
+                android:outlineSpotShadowColor="@color/white"
+                android:outlineAmbientShadowColor="@color/white"
+                app:strokeWidth="0dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -57,9 +143,10 @@
                     android:paddingRight="12dp"
                     android:paddingBottom="4dp"
                     android:text=" 🌠Astronomy Picture of the Day"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="10sp"
                     android:textStyle="bold" />
+
             </com.google.android.material.card.MaterialCardView>
 
 
@@ -67,6 +154,18 @@
 
 
     </com.google.android.material.card.MaterialCardView>
+    <ProgressBar
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rv_main"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/rv_main"
+        android:id="@+id/loader"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -74,7 +173,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="8dp"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideInset"
+        android:fadeScrollbars="true"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,19 +186,7 @@
         app:layout_constraintTop_toBottomOf="@+id/layout_picOfDay"
         tools:listitem="@layout/patent_item" />
 
-<!--    <com.airbnb.lottie.LottieAnimationView-->
-<!--        android:layout_width="72dp"-->
-<!--        android:layout_height="72dp"-->
-<!--        app:layout_constraintBaseline_toBottomOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        android:id="@+id/lottie_loader"-->
-<!--        app:lottie_autoPlay="false"-->
-<!--        android:visibility="invisible"-->
-<!--        app:lottie_loop="true"-->
-<!--        app:lottie_url="https://assets3.lottiefiles.com/packages/lf20_ZZWqk0.json"-->
-<!--        />-->
+
+
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
